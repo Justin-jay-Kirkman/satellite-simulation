@@ -1,0 +1,5 @@
+services:
+  web:
+    build: satellite_project_SSE
+    ports:
+      - "8000:8000"

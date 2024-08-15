@@ -23,7 +23,8 @@ class Spacecraft(models.Model):
 class Company(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    Satellite = models.ManyToManyField(Spacecraft)
+    slug = AutoSlugField(populate_from='name')
+    Satellites = models.ManyToManyField(Spacecraft)
 
     class Meta:
         verbose_name_plural = 'Companies'

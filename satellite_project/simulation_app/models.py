@@ -14,6 +14,7 @@ class Spacecraft(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name')
+    updated = models.DateTimeField(auto_now=True)
 
     status = models.CharField(max_length=20, choices=SPACECRAFT_STATUS, default="NOMINAL")
 

@@ -9,5 +9,5 @@ def simulation_satellite_malfunction(self):
         random_item = random.choice(spacecrafts)
         random_item.status = "MALFUNCTIONING"
         random_item.save()
-        return "Malfunction was successfully simulated"
+        return "Malfunction was successfully simulated for " + random_item.name
     return "No items to update"

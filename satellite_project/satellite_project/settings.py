@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,8 +71,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'satellite_project.wsgi.application'
+ASGI_APPLICATION = "satellite_project.asgi.application"
 
+# Use this for when running in containers using docker compose up --build
 CELERY_BROKER_URL = 'redis://redis:6379/0'
+# If you want to use this outside of the container, you can uncomment this
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_EXTENDED = True
 CELERY_ACCEPT_CONTENT = ['application/json']

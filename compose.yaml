@@ -1,5 +1,22 @@
 services:
   web:
     build: satellite_project
+    image: satellite-project-image
+    container_name: satellite-project-container
     ports:
       - "8000:8000"
+    depends_on:
+      - redis
+  redis:
+   image: "redis:alpine"
+   container_name: redis-container
+   restart: unless-stopped
+   ports:
+     - "6379:6379"
+  celery:
+    image: satellite-project-image
+    container_name: celery-container
+    command: celery -A satellite_project worker -E -l info
+    depends_on:
+      - redis
+      - web

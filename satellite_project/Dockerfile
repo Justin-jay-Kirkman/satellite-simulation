@@ -1,5 +1,11 @@
 FROM python:3
 
+# prevents python buffering stdout and stderr
+ENV PYTHONUNBUFFERED 1
+
+# prevents python from writing .pyc files to disc
+ENV PYTHONDONTWRITEBYTECODE 1
+
 WORKDIR /project
 
 COPY requirements.txt requirements.txt
@@ -8,18 +14,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-#RUN chmod +x django.sh
-
-# update schema if needed
-RUN python manage.py makemigrations simulation_app
-# apply new db structure
-RUN python manage.py migrate
-
-#RUN ls -d */
-#
-#RUN chmod o+x satellite_project/
-
-#RUN celery -A satellite_project.celery worker --pool=solo -l info
-
-CMD ["python","manage.py","runserver", "0.0.0.0:8000"]
+# install system dependencies
+RUN apt-get update
 

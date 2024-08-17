@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,25 +77,38 @@ ASGI_APPLICATION = "satellite_project.asgi.application"
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 # If you want to use this outside of the container, you can uncomment this
 # CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'
+
 CELERY_RESULT_EXTENDED = True
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'US/Eastern'
 
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND_DB = ''.join(['postgresql+psycopg2://', os.getenv("DATABASE_USER"), ":", os.getenv("DATABASE_PASSWORD"), "@localhost/", os.getenv("DATABASE_NAME")])
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": os.environ.get("HOST"),
+        "NAME": os.environ.get("SQL_NAME"),
+        "USER": os.environ.get("SQL_USER"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD"),
+        "PORT": os.environ.get("PORT")
     }
 }
 
+# HOST = postgres_db
+#
+# SQL_NAME = tasks_db
+# SQL_USER = dbadmin
+# SQL_PASSWORD = password
+# HOST = postgres_db
+# PORT = 5432
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

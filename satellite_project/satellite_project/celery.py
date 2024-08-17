@@ -13,12 +13,12 @@ app.conf.enable_utc = False
 app.conf.update(timezone=settings.TIME_ZONE)
 
 # Configure Celery using settings from Django settings.py.
-app.config_from_object(settings, namespace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
 
 #Celery Beat settings
 
 # Load tasks from all registered Django app configs.
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()
 
 @app.task(bind=True)
 def debug_task(self):

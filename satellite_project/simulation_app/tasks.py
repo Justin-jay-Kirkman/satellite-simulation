@@ -2,8 +2,7 @@ import random
 from simulation_app.models import Spacecraft
 from celery import shared_task
 
-# TODO: add celery beat to schedule this in future update
-# To use: simulation_satellite_malfunction.delay()
+
 @shared_task(bind=True)
 def simulation_satellite_malfunction(self):
     spacecrafts = list(Spacecraft.objects.all())

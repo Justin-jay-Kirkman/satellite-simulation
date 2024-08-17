@@ -1,0 +1,44 @@
+services:
+  postgres_db:
+    image: postgres
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${SQL_NAME}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+    ports:
+      - "5432:5432"
+    container_name: postgres_db_container
+  web:
+    build: .
+    container_name: django_container
+    volumes:
+      - .:/project
+    ports:
+      - "8000:8000"
+    command: [ "sh", "./django.sh" ]
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
+  redis:
+   image: "redis:alpine"
+   container_name: redis_container
+   restart: unless-stopped
+   ports:
+     - "6379:6379"
+  celery:
+    restart: always
+    build:
+      context: .
+    container_name: celery_container
+    command: celery -A satellite_project worker -E -l info --loglevel=INFO --concurrency=8 -O fair
+    volumes:
+      - .:/project
+    depends_on:
+      - postgres_db
+      - redis
+      - web
+volumes:
+  postgres_data:

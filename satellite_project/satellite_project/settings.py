@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'daphne',
+    'django_celery_beat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +77,7 @@ ASGI_APPLICATION = "satellite_project.asgi.application"
 # Use this for when running in containers using docker compose up --build
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 # If you want to use this outside of the container, you can uncomment this
-# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_EXTENDED = True
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -91,8 +92,12 @@ CELERY_TIMEZONE = 'US/Eastern'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'mypassword',
+        'HOST': 'my-postgres',
+        'PORT': '5432',
     }
 }
 
@@ -137,3 +142,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# For django-celery-beat
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

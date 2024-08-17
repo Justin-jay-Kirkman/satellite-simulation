@@ -20,6 +20,9 @@ app.config_from_object(settings, namespace='CELERY')
 # Load tasks from all registered Django app configs.
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
+# add this to fix container issues
+# app.loader.override_backends['django-db'] = 'django_celery_results.backends.database:DatabaseBackend'
+
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))

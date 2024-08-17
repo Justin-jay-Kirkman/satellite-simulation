@@ -1,0 +1,45 @@
+services:
+  web:
+    build: .
+    image: satellite-project-image
+    container_name: satellite-project-container
+    command: >
+            bash -c "python manage.py makemigrations &&
+                        python manage.py migrate &&
+                        python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/project
+    depends_on:
+      - redis
+      - my-postgres
+  my-postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: mypassword
+  redis:
+   image: redis:alpine
+   container_name: redis-container
+   restart: unless-stopped
+   ports:
+     - 6379:6379
+  celery:
+    image: satellite-project-image
+    container_name: celery-container
+    command: celery -A satellite_project worker -E --loglevel=info
+    volumes:
+      - .:/project
+    depends_on:
+      - redis
+      - web
+  celerybeat:
+    image: satellite-project-image
+    container_name: celerybeat-container
+    command: celery -A satellite_project beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/project
+    depends_on:
+      - celery
+      - redis
+      - web

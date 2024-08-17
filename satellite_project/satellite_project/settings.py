@@ -84,9 +84,9 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'US/Eastern'
 
-CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_RESULT_BACKEND_DB = ''.join(['postgresql+psycopg2://', os.getenv("DATABASE_USER"), ":", os.getenv("DATABASE_PASSWORD"), "@localhost/", os.getenv("DATABASE_NAME")])
-
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+# CELERY_RESULT_BACKEND_DB = ''.join(['postgresql+psycopg2://', os.getenv("SQL_USER"), ":", os.getenv("SQL_PASSWORD"), "@localhost/", os.getenv("HOST")])
+# CELERY_RESULT_BACKEND_DB = "postgresql+psycopg2://dbadmin:password@localhost/postgres_db"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

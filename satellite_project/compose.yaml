@@ -33,9 +33,13 @@ services:
     build:
       context: .
     container_name: celery_container
-    command: celery -A satellite_project worker -E -l info --loglevel=INFO --concurrency=8 -O fair
+    command: celery -A satellite_project worker -E -l info --loglevel=INFO --concurrency=1 -O fair
     volumes:
       - .:/project
+    environment:
+      - POSTGRES_DB=${SQL_NAME}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
     depends_on:
       - postgres_db
       - redis

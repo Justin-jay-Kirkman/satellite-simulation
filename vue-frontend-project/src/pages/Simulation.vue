@@ -2,9 +2,9 @@
   <div>
       <h1>Satellite Simulation</h1>
 
-    <button @click="startSSE()">Start</button>
-    <button @click="stopSSE()" disabled>Stop</button>
-    <div class="alert-success" v-if="updateStatusMsg">{{updateStatusMsg}}</div>
+    <button @click="startSSE();runRandomStatusUpdate();">Start</button>
+    <button @click="stopSSE()">Stop</button>
+    <div style="display: none;" class="alert-success" v-if="updateStatusMsg">{{updateStatusMsg}}</div>
     <table  class="table">
       <tr>
         <td>Name</td>
@@ -17,8 +17,7 @@
         <td data-id="{{s.id}}"><button v-if="s.status =='MALFUNCTIONING'" @click="updateStatus(s.slug)">Set to Nominal</button></td>
       </tr>
     </table>
-
-    <div id="sse-data">{{sseData}}</div>
+    <div style="display: none;" class="alert-success" v-if="sseLastUpdated">{{sseLastUpdated.name}} updated to {{sseLastUpdated.status}}</div>
   </div>
 </template>
 <script>
@@ -43,9 +42,12 @@ export default {
         updated: "",
         status: "" // NOMINAL, MALFUNCTIONING
       }],
-      sseData: [],
+      sseDataLog: [],
+      sseLastUpdated: "",
       error: "",
       updateStatusMsg: "",
+      sseMessage: "",
+      simulationOn: false,
     }
   },
   methods: {
@@ -68,28 +70,57 @@ export default {
       }
     },
     async startSSE() {
-        this.eventSource.onmessage = event => this.sseData = event.data;
+        this.eventSource.onmessage = event => {
+          this.sseDataLog.push(JSON.parse(event.data));
+          this.sseLastUpdated = JSON.parse(event.data);
+          this.satellites.forEach((s, index) =>{
+            if(this.sseLastUpdated.slug === s.slug){
+              this.satellites[index].status = this.sseLastUpdated.status;
+            }
+          });
+        }
     },
     async stopSSE() {
       if (this.eventSource) {
           this.eventSource.close();
         }
+      this.simulationOn = false;
     },
-    async updateStatus(slug){
+    async runRandomStatusUpdate(){
+      let i = 0;
+      this.simulationOn = true;
+      while (i < 10 || !this.simulationOn){
+        await this.sendRandomStatusUpdate();
+      }
+    },
+    async sendRandomStatusUpdate(){
+        const min = 1, max = 10;
+        const rand_time = Math.floor(Math.random() * (max - min + 1) + min);
+        const statusList = ["NOMINAL", "MALFUNCTIONING"];
+        const randomStatus = Math.floor(Math.random() * statusList.length);
+        await new Promise(resolve => setTimeout(resolve, rand_time * 1000));
+
+        const randomSpaceCraft = Math.floor(Math.random() * this.satellites.length);
+        console.log(this.satellites[randomSpaceCraft].slug);
+        console.log(statusList[randomStatus])
+        await this.updateStatus(this.satellites[randomSpaceCraft].slug, statusList[randomStatus]);
+      },
+    async updateStatus(slug, newStatus='NOMINAL'){
         try {
           const response = await fetch('http://localhost:8000/api/spacecrafts/' + slug + '/update-status', {
-            method: 'POST',
+            method: 'PUT',
              headers: {
                       'Content-Type': 'application/json',
                       'X-CSRFToken': getCSRFToken()
                   },
             body: JSON.stringify({
-              status: "NOMINAL"
+              status: newStatus
             }),
           })
           const data = await response.json()
           if (response.ok) {
-            this.updateStatus = slug + "set to NOMINAL"
+            this.updateStatusMsg = slug + " set to " + newStatus + " - updates will show if simulation started"
+
           } else {
             this.error = data.error || 'Update failed'
           }

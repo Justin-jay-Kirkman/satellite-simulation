@@ -38,7 +38,7 @@ async def sse_stream(request):
 
 
 def _format_message(model):
-    data = json.dumps({"name": model.name, "status": model.status}) + "\n\n"
+    data = json.dumps({"name": model.name, "status": model.status, "slug": model.slug}) + "\n\n"
     return f"data: {data}"
 
 

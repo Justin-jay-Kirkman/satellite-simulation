@@ -5,23 +5,23 @@ import Register from "./pages/Register.vue";
 import Simulation from "./pages/Simulation.vue";
 
 const routes = [
+    // {
+    //     path: '/',
+    //     name: 'home',
+    //     component: Home
+    // },
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: Login
+    // },
+    // {
+    //     path: '/register',
+    //     name: 'register',
+    //     component: Register
+    // },
     {
         path: '/',
-        name: 'home',
-        component: Home
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login
-    },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register
-    },
-    {
-        path: '/simulation',
         name: 'simulation',
         component: Simulation
     }

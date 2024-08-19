@@ -224,15 +224,22 @@ A better solution would be watching the database and having it ‘signal’ the 
 
 ### Results
 
-Landing Page
+
+##### Landing Page
+
 ![Landing Page](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/landing.jpg)
 
-API
+##### Admin Page
+
+![Admin Page](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/Admin.jpg)
+
+##### API
+
 ![API](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/API.jpg)
 
-FrontEnd
-![Vue FrontEnd](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/frontend.jpg)
+##### FrontEnd
 
+![Vue FrontEnd](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/frontend.jpg)
 
 
 #### Final Thoughts

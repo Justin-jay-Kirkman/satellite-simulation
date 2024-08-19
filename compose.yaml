@@ -13,10 +13,10 @@ services:
    restart: unless-stopped
    ports:
      - "6379:6379"
-  celery:
-    image: satellite-project-image
-    container_name: celery-container
-    command: celery -A satellite_project worker -E -l info
+  vue:
+    build: vue-frontend-project
+    container_name: vue-frontend-container
+    ports:
+      - "8080:8080"
     depends_on:
-      - redis
       - web

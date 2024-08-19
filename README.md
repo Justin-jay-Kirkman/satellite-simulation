@@ -224,8 +224,14 @@ A better solution would be watching the database and having it ‘signal’ the 
 
 ### Results
 
-Landing page
-![landing page](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/API.jpg)
+Landing Page
+![Landing Page](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/landing.jpg)
+
+API
+![API](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/API.jpg)
+
+FrontEnd
+![Vue FrontEnd](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/frontend.jpg)
 
 
 

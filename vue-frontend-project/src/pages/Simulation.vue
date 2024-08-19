@@ -14,7 +14,7 @@
       <tr v-for="s in satellites" data-id="{{s.id}}">
         <td>{{s.name}}</td>
         <td>{{s.status}}</td>
-        <td data-id="{{s.id}}"><button v-if="s.status =='MALFUNCTIONING'" @click="updateStatus(s.slug)">Set to Nominal</button></td>
+        <td data-id="{{s.id}}"><button v-if="s.status ==='MALFUNCTIONING'" @click="updateStatus(s.slug,'NOMINAL',true)">Set to Nominal</button></td>
       </tr>
     </table>
     <div style="display: none;" class="alert-success" v-if="sseLastUpdated">{{sseLastUpdated.name}} updated to {{sseLastUpdated.status}}</div>
@@ -105,13 +105,13 @@ export default {
         console.log(statusList[randomStatus])
         await this.updateStatus(this.satellites[randomSpaceCraft].slug, statusList[randomStatus]);
       },
-    async updateStatus(slug, newStatus='NOMINAL'){
+    async updateStatus(slug, newStatus='NOMINAL', userTriggered=false){
         try {
           const response = await fetch('http://localhost:8000/api/spacecrafts/' + slug + '/update-status', {
             method: 'PUT',
              headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': getCSRFToken()
+                      'Content-Type': 'application/json'
+                      // 'X-CSRFToken': getCSRFToken()
                   },
             body: JSON.stringify({
               status: newStatus
@@ -120,6 +120,14 @@ export default {
           const data = await response.json()
           if (response.ok) {
             this.updateStatusMsg = slug + " set to " + newStatus + " - updates will show if simulation started"
+            // Fast update
+            if(userTriggered===true){
+              this.satellites.forEach((s, index) =>{
+                if(slug === s.slug){
+                  this.satellites[index].status = newStatus;
+                }
+              });
+            }
 
           } else {
             this.error = data.error || 'Update failed'

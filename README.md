@@ -51,6 +51,11 @@ If you want to create a superuser for django, you can run this command to create
 ```
 $ docker exec -it satellite-project-container python manage.py createsuperuser
 ```
+You can also run this command in the django container exec to add an admin user instead.
+
+```
+python manage.py createsuperuser
+```
 This superuser will allow you to open the admin panel: `http://localhost:8000/admin`
 
 You can also directly access the API directly: `http://localhost:8000/api/docs`

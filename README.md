@@ -225,7 +225,7 @@ A better solution would be watching the database and having it ‘signal’ the 
 
 <b>Last Push:</b> Goal is to get some data into the front end and refactor the event_stream after. There are many Websocket tutorials out there and it might have been an easier choice for a quicker delivery. That being said, I still like the one way connections with SSE opposed to bi-directional flow as I think it might be harder to load balance, use with firewalls and proxies.(It just takes more time than I thought to set up) 
 
-<b>Last issue working on:</b> celery is not working anymore once containerized. It doesn’t seem to be loading the models from django.  I’m taking a deeper look into this.
+<b>Last issue working on:</b> celery is not working anymore once containerized. It doesn’t seem to be loading the models from django.  For now, bypassing this by having vue push updates at random intervals and console logging for easy viewing.
 
 ### Results
 

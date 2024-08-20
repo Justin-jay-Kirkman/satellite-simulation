@@ -1,12 +1,28 @@
 services:
+  postgres_db:
+    image: postgres
+    volumes:
+      - ./satellite_project/postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${SQL_NAME}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+    ports:
+      - "5432:5432"
+    container_name: postgres_db_container
   web:
     build: satellite_project
-    image: satellite-project-image
     container_name: satellite-project-container
     ports:
       - "8000:8000"
+    command: [ "sh", "./django.sh" ]
+    env_file:
+      - satellite_project/.env
+    volumes:
+      - ./satellite_project:/usr/src/app
     depends_on:
       - redis
+      - postgres_db
   redis:
    image: "redis:alpine"
    container_name: redis-container
@@ -18,5 +34,9 @@ services:
     container_name: vue-frontend-container
     ports:
       - "8080:8080"
+    volumes:
+      - ./vue-frontend-project:/usr/src/app
     depends_on:
       - web
+volumes:
+  postgres_data:

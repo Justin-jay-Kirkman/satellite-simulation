@@ -32,7 +32,7 @@ You will need to have <a href="https://www.docker.com/products/docker-desktop/">
 
 ### Run the Application
 
-To run the application locally, once Docker is installed, run this command from the satellite_project folder to deploy with Docker compose.
+To run the application locally, once Docker is installed, run this command from the satellite-simulation folder to deploy with Docker compose.
 
 ```
 $ docker compose up -d

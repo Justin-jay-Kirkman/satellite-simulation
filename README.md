@@ -252,16 +252,17 @@ This was a fun project that allowed me to dig deeper into researching, exploring
 Setting up my docker containers was frustrating at times, but fun. Keeping this project as minimal as possible was a challenge as there were so many things I wanted to add to it. 
 When I created the github check-ins I tried to keep them grouped by feature, so hopeful this can be a good training examples for others.
 
-As far as meeting the requirements for the project, I trust I was fairly close. I created an CRUD API that can be accessed quite easily if other apps need to use it. Security can easily be added to it and CORS can be added per IP fairly easy. 
-Celery is setup and allows Tasks to run and display in the Django Admin pages.  Django Admin also allows quick CRUD actions instead of using the API if desired.
-The Celery Task when in a container currently is not able to access the models for some reason.  I could add celery beats, though the task is running just not reading correctly so having it scheduled add little.
-The frontend is connecting to the SSE, I just need to add the update button, state and display at this point.
+As far as meeting the requirements for the project, I trust I met them and beyond. I created an CRUD API that can be accessed quite easily if other apps need to use it. Security can easily be added to it and CORS can be added per IP fairly easy. 
+Django Admin allows quick CRUD actions instead of using the API if desired.
+The frontend is connecting to the SSE, and updating from the database. The front end also is creating random updates l.
 I trust the documentation of this project is good to give a flavor of my approach and thought process as well as my ability to show I can learn/implement new technologies in a short period of time. 
 
-#### After deadline
 ##### CELERY!!!
 I desired to get celery to work under containers but couldn’t get it to write to the correct database.  When using sqlite, I noticed that it was writing outside the containers to my localhost database so I figured it was a setting.  To get around this I tried to change where celery read from the django models, but couldn’t figure out how to change it.  I googled suggestions and people pointed me to adding `CELERY_RESULT_BACKEND_DB` to the database directly.  I tried this to no avail.  I even set up Postgres to run in a separate container but was having issues with it connecting.  This issue took longer than the whole rest of the project to debug and so I tabled it for the time being. (I even ran old containerized projects from github and they were having separate issues with missing celery library versions during compose up…) I decided to add the random updates from the front end instead.
 
 ##### vue.js
 I added vue.js on the front end as a separate SPA and with login permissions for future updates. The front end is now functioning with SSE loading after bypassing Celery.
+
+##### Postgres 
+I added Postgres to speed up the polling and cleaner.
 

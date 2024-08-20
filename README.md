@@ -56,7 +56,7 @@ You can also run this command in the django container exec to add an admin user 
 ```
 python manage.py createsuperuser
 ```
-This superuser will allow you to open the admin panel: `http://localhost:8000/admin`
+This superuser will allow you to open the admin panel to add and manage spacecrafts: `http://localhost:8000/admin`
 
 You can also directly access the API directly: `http://localhost:8000/api/docs`
 

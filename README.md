@@ -109,7 +109,7 @@ I was debating on using websockets but to decouple the connection and less compl
 
 #### Priority List
 
-Normally I would use a Kanban project like in `https://kanbanflow.com/` to manage the priorities and backlog for personal projects but for ease of use and ease of following, I will just update this word document to help give a description of my approach:
+Normally I would use a Kanban project like in `https://kanbanflow.com/` to manage the priorities and backlog for personal projects but for ease of use/reading, I will summarize it here:
 
 ##### High-Priority
 

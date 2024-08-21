@@ -35,16 +35,18 @@ You will need to have <a href="https://www.docker.com/products/docker-desktop/">
 To run the application locally, once Docker is installed, run this command from the satellite-simulation folder to deploy with Docker compose.
 
 ```
-$ docker compose up -d
-[+] Building 5.0s (14/14) FINISHED
+$ docker compose up -- build
+[+] Building 10.4s (27/27) FINISHED 
 ...
 => [web] resolving provenance for metadata file
-[+] Running 3/3
+[+] Running 4/4
 ...
-Attaching to celery-container, redis-container, satellite-project-container
+Attaching to postgres_db_container, redis-container, satellite-project-container, vue-frontend-container
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser to verify it is running.
+
+Note: If it is not running, try building it again as sometimes I noticed the django.sh scripts running with /r when copied from windows.
 
 If you want to create a superuser for django, you can run this command to create an admin user.
 

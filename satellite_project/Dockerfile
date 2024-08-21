@@ -14,6 +14,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+# remove /r from new lines if coming from windows
+RUN cat django.sh | tr -d '\r'
+
 # install system dependencies
 RUN apt-get update
 

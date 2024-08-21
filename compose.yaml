@@ -15,7 +15,7 @@ services:
     container_name: satellite-project-container
     ports:
       - "8000:8000"
-    command: [ "sh", "./django.sh" ]
+    command: [ "bash", "./django.sh" ]
     env_file:
       - satellite_project/.env
     volumes:

@@ -248,6 +248,9 @@ A better solution would be watching the database and having it ‘signal’ the 
 
 ![Vue FrontEnd](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/frontend.jpg)
 
+##### Kanban Board
+
+![Kanban](https://github.com/Justin-jay-Kirkman/satellite-simulation/blob/main/img/Kanban.jpg)
 
 #### Final Thoughts
 This was a fun project that allowed me to dig deeper into researching, exploring different technologies and ramping up into some unfamiliar territories.
